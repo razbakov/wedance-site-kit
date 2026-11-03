@@ -4,6 +4,7 @@
 // (a WhatsApp group, say).
 const props = defineProps<{ contactsUrl?: string }>()
 const { locale } = useI18n()
+const st = useSiteText()
 const route = useRoute()
 const { apiUrl } = useWeDanceProfile()
 const formName = (useRuntimeConfig().public.wedanceUtmSource as string) || 'wedance-site'
@@ -81,8 +82,8 @@ async function submit() {
         type="text"
         required
         autocomplete="name"
-        :placeholder="$t('wedanceSite.form.namePlaceholder')"
-        class="rounded-full px-6 py-4 bg-surface-900/60 border border-surface-700/50 text-fg placeholder:text-surface-400 focus:outline-none focus:border-accent-500/50 transition-colors"
+        :placeholder="st('form.namePlaceholder')"
+        class="rounded-full px-6 py-4 bg-site-surface/60 border border-site-border-strong/50 text-site-heading placeholder:text-site-subtle focus:outline-none focus:border-site-accent/50 transition-colors"
       />
       <input
         v-model="email"
@@ -90,8 +91,8 @@ async function submit() {
         type="email"
         required
         autocomplete="email"
-        :placeholder="$t('wedanceSite.form.emailPlaceholder')"
-        class="rounded-full px-6 py-4 bg-surface-900/60 border border-surface-700/50 text-fg placeholder:text-surface-400 focus:outline-none focus:border-accent-500/50 transition-colors"
+        :placeholder="st('form.emailPlaceholder')"
+        class="rounded-full px-6 py-4 bg-site-surface/60 border border-site-border-strong/50 text-site-heading placeholder:text-site-subtle focus:outline-none focus:border-site-accent/50 transition-colors"
       />
       <input
         v-model="phone"
@@ -99,35 +100,35 @@ async function submit() {
         type="tel"
         required
         autocomplete="tel"
-        :placeholder="$t('wedanceSite.form.phonePlaceholder')"
-        class="rounded-full px-6 py-4 bg-surface-900/60 border border-surface-700/50 text-fg placeholder:text-surface-400 focus:outline-none focus:border-accent-500/50 transition-colors"
+        :placeholder="st('form.phonePlaceholder')"
+        class="rounded-full px-6 py-4 bg-site-surface/60 border border-site-border-strong/50 text-site-heading placeholder:text-site-subtle focus:outline-none focus:border-site-accent/50 transition-colors"
       />
       <input
         v-model="promoCode"
         name="promo_code"
         type="text"
-        :placeholder="$t('wedanceSite.form.promoCodePlaceholder')"
-        class="rounded-full px-6 py-4 bg-surface-900/60 border border-surface-700/50 text-fg placeholder:text-surface-400 focus:outline-none focus:border-accent-500/50 transition-colors"
+        :placeholder="st('form.promoCodePlaceholder')"
+        class="rounded-full px-6 py-4 bg-site-surface/60 border border-site-border-strong/50 text-site-heading placeholder:text-site-subtle focus:outline-none focus:border-site-accent/50 transition-colors"
       />
       <button
         type="submit"
         :disabled="status === 'submitting'"
-        class="rounded-full bg-accent-500 px-8 py-4 text-lg font-semibold text-surface-950 hover:bg-accent-400 transition-colors shadow-lg shadow-accent-500/20 disabled:opacity-60"
+        class="rounded-full bg-site-accent px-8 py-4 text-lg font-semibold text-site-on-accent hover:bg-site-highlight transition-colors shadow-lg shadow-site-accent/20 disabled:opacity-60"
       >
-        {{ status === 'submitting' ? $t('wedanceSite.form.submitting') : $t('wedanceSite.form.submit') }}
+        {{ status === 'submitting' ? st('form.submitting') : st('form.submit') }}
       </button>
     </form>
 
     <div v-if="status === 'success'" class="text-center">
-      <p class="text-xl font-semibold text-accent-400">{{ $t('wedanceSite.form.success') }}</p>
+      <p class="text-xl font-semibold text-site-highlight">{{ st('form.success') }}</p>
       <slot name="success" />
     </div>
 
     <p v-if="status === 'error'" class="mt-3 text-sm text-red-400 text-center">
-      {{ errorMessage || $t('wedanceSite.form.error') }}
+      {{ errorMessage || st('form.error') }}
     </p>
-    <p v-if="status !== 'success'" class="mt-3 text-xs text-surface-500 text-center">
-      {{ $t('wedanceSite.form.privacy') }}
+    <p v-if="status !== 'success'" class="mt-3 text-xs text-site-faint text-center">
+      {{ st('form.privacy') }}
     </p>
   </div>
 </template>

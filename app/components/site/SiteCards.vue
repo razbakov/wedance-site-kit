@@ -20,34 +20,34 @@ const cols = computed(() => ({ 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
         :size="layout === 'steps' ? 'text-3xl sm:text-4xl' : 'text-3xl sm:text-4xl lg:text-5xl leading-tight max-w-3xl mx-auto'"
         :stacked="layout === 'list'"
       />
-      <SiteParagraphs :body="section.body" class="mt-5" p-class="text-surface-200 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed" />
+      <SiteParagraphs :body="section.body" class="mt-5" p-class="text-site-text text-base sm:text-lg max-w-3xl mx-auto leading-relaxed" />
     </div>
 
     <ol v-if="layout === 'list'" class="list-none mx-auto max-w-2xl space-y-5">
       <li v-for="item in items" :key="item.id" class="flex gap-5">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent-500/40 bg-accent-500/10 font-display text-xl text-accent-400">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-site-accent/40 bg-site-accent/10 font-display text-xl text-site-highlight">
           {{ item.tag }}
         </span>
         <div class="pt-1">
-          <h3 class="font-display text-xl text-fg">
-            <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-accent-400 transition-colors">{{ item.title }}</a>
+          <h3 class="font-display text-xl text-site-heading">
+            <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-site-highlight transition-colors">{{ item.title }}</a>
             <template v-else>{{ item.title }}</template>
           </h3>
-          <p v-if="item.body" class="mt-1 text-sm text-surface-200 leading-relaxed whitespace-pre-line">{{ item.body }}</p>
+          <p v-if="item.body" class="mt-1 text-sm text-site-text leading-relaxed whitespace-pre-line">{{ item.body }}</p>
         </div>
       </li>
     </ol>
 
     <div v-else-if="layout === 'steps'" class="grid gap-8" :class="cols">
-      <div v-for="item in items" :key="item.id" class="relative rounded-2xl bg-surface-950/60 border border-surface-800/40 p-8">
-        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent-500/10 text-accent-400 font-display text-xl">
+      <div v-for="item in items" :key="item.id" class="relative rounded-2xl bg-site-bg/60 border border-site-border/40 p-8">
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-site-accent/10 text-site-highlight font-display text-xl">
           {{ item.tag }}
         </div>
         <h3 class="text-lg font-semibold mb-2">
-          <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-accent-400 transition-colors">{{ item.title }}</a>
+          <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-site-highlight transition-colors">{{ item.title }}</a>
           <template v-else>{{ item.title }}</template>
         </h3>
-        <p v-if="item.body" class="text-surface-300 text-sm leading-relaxed whitespace-pre-line">{{ item.body }}</p>
+        <p v-if="item.body" class="text-site-muted text-sm leading-relaxed whitespace-pre-line">{{ item.body }}</p>
       </div>
     </div>
 
@@ -57,15 +57,15 @@ const cols = computed(() => ({ 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
         v-for="(item, i) in items"
         :key="item.id"
         class="rounded-2xl p-6 sm:p-8"
-        :class="i === 0 ? 'border-2 border-accent-500/40 bg-accent-500/10' : 'border border-surface-800/50 bg-surface-950/50'"
+        :class="i === 0 ? 'border-2 border-site-accent/40 bg-site-accent/10' : 'border border-site-border/50 bg-site-bg/50'"
       >
         <img v-if="item.image" :src="item.image" :alt="item.title || ''" class="mb-5 w-full rounded-xl object-cover aspect-video" />
-        <p v-if="item.tag" class="text-xs font-bold uppercase tracking-[0.18em] text-accent-400 mb-2">{{ item.tag }}</p>
-        <h3 v-if="item.title" class="font-display text-2xl text-fg mb-3">
-          <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-accent-400 transition-colors">{{ item.title }}</a>
+        <p v-if="item.tag" class="text-xs font-bold uppercase tracking-[0.18em] text-site-highlight mb-2">{{ item.tag }}</p>
+        <h3 v-if="item.title" class="font-display text-2xl text-site-heading mb-3">
+          <a v-if="item.url" v-bind="linkAttrs(item.url)" class="hover:text-site-highlight transition-colors">{{ item.title }}</a>
           <template v-else>{{ item.title }}</template>
         </h3>
-        <p v-if="item.body" class="text-sm text-surface-200 leading-relaxed whitespace-pre-line">{{ item.body }}</p>
+        <p v-if="item.body" class="text-sm text-site-text leading-relaxed whitespace-pre-line">{{ item.body }}</p>
       </div>
     </div>
 

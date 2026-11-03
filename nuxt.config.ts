@@ -21,15 +21,18 @@ export default defineNuxtConfig({
       wedanceUtmSource: '',
     },
   },
-  // Default copy for the sections; a site's own locale files win key by key.
+  // Routing defaults every site shares; a site's own i18n options win key by
+  // key. No `locales` here on purpose: layers' locale lists are concatenated,
+  // so each site declares its own, and only those.
   i18n: {
-    langDir: 'locales',
-    locales: [
-      { code: 'en', file: 'en.json' },
-      { code: 'de', file: 'de.json' },
-      { code: 'es', file: 'es.json' },
-      { code: 'ru', file: 'ru.json' },
-      { code: 'uk', file: 'uk.json' },
-    ],
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+    // Only on the homepage, so a shared deep link opens in its own language.
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      redirectOn: 'root',
+      fallbackLocale: 'en',
+    },
   },
 })

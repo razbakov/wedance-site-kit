@@ -7,7 +7,7 @@ defineProps<{ section: SiteSection; tinted?: boolean }>()
   <SiteBlock :anchor="section.anchor" :tinted="tinted" width="max-w-4xl">
     <div class="text-center mb-12">
       <SiteHeading :eyebrow="section.eyebrow" :title="section.title" :accent="section.titleAccent" />
-      <SiteParagraphs :body="section.body" class="mt-4" p-class="text-surface-200 max-w-2xl mx-auto leading-relaxed" />
+      <SiteParagraphs :body="section.body" class="mt-4" p-class="text-site-text max-w-2xl mx-auto leading-relaxed" />
     </div>
     <SiteVideoEmbed :url="section.video" :title="[section.title, section.titleAccent].filter(Boolean).join(' ')" />
   </SiteBlock>

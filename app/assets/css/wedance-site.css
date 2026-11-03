@@ -1,34 +1,22 @@
 /*
- * Default theme: a dark page with a warm accent. Values are space-separated
- * RGB channels so Tailwind's opacity modifiers (bg-surface-900/30) work.
- * :where() keeps these at zero specificity — any `:root { --wds-… }` in the
+ * Default theme: a dark page with a warm accent. Each value is space-separated
+ * RGB channels, so Tailwind's opacity modifiers (bg-site-surface/30) work.
+ * :where() keeps these at zero specificity — any `:root { --site-… }` in the
  * site wins, whatever order the stylesheets load in.
  */
 :where(:root) {
-  --wds-surface-50: 250 250 250;
-  --wds-surface-100: 244 244 245;
-  --wds-surface-200: 228 228 231;
-  --wds-surface-300: 212 212 216;
-  --wds-surface-400: 161 161 170;
-  --wds-surface-500: 113 113 122;
-  --wds-surface-600: 82 82 91;
-  --wds-surface-700: 63 63 70;
-  --wds-surface-800: 39 39 42;
-  --wds-surface-900: 24 24 27;
-  --wds-surface-950: 9 9 11;
-
-  --wds-accent-50: 255 251 235;
-  --wds-accent-100: 254 243 199;
-  --wds-accent-200: 253 230 138;
-  --wds-accent-300: 252 211 77;
-  --wds-accent-400: 251 191 36;
-  --wds-accent-500: 245 158 11;
-  --wds-accent-600: 217 119 6;
-  --wds-accent-700: 180 83 9;
-  --wds-accent-800: 146 64 14;
-  --wds-accent-900: 120 53 15;
-  --wds-accent-950: 69 26 3;
-
-  --wds-fg: 255 255 255;
-  --wds-font-display: Georgia, 'Times New Roman', serif;
+  --site-bg: 9 9 11;
+  --site-surface: 24 24 27;
+  --site-border: 39 39 42;
+  --site-border-strong: 63 63 70;
+  --site-border-button: 82 82 91;
+  --site-heading: 255 255 255;
+  --site-text: 228 228 231;
+  --site-muted: 212 212 216;
+  --site-subtle: 161 161 170;
+  --site-faint: 113 113 122;
+  --site-accent: 245 158 11;
+  --site-highlight: 251 191 36;
+  --site-on-accent: 9 9 11;
+  --site-font-display: Georgia, 'Times New Roman', serif;
 }

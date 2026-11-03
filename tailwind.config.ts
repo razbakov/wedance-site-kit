@@ -1,23 +1,31 @@
-// Theme tokens. Every Site* component paints with these three, never with a
-// site's own palette, so each site keeps its look by setting them — either as
-// CSS variables (see app/assets/css/wedance-site.css) or by redefining the
-// colors in its own tailwind.config (which wins over this one).
-//   surface — the page's own color: backgrounds, borders, muted text
-//   accent  — eyebrows, highlights, buttons
-//   fg      — headings and strong text on the surface
-const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
-const scale = (name: string) => Object.fromEntries(shades.map(s => [s, `rgb(var(--wds-${name}-${s}) / <alpha-value>)`]))
+// Theme tokens, named by role. Every Site* component paints with these and
+// nothing else, so each site keeps its own look by setting them — as CSS
+// variables (app/assets/css/wedance-site.css lists them all) or by redefining
+// `colors.site` in its own tailwind.config, which wins over this one.
+const roles = [
+  'bg', // the page; cards sit on it at 50–60 % (bg-site-bg/60)
+  'surface', // tinted sections, tiles, form fields
+  'border', // card and table lines
+  'border-strong', // form fields, photo rings
+  'border-button', // secondary (outline) buttons
+  'heading', // titles and strong text
+  'text', // body copy
+  'muted', // secondary copy
+  'subtle', // small print, placeholders
+  'faint', // the faintest notes and icons
+  'accent', // eyebrows, buttons, badges
+  'highlight', // the accent words in titles, hovers
+  'on-accent', // text on accent buttons
+]
 
 export default {
   theme: {
     extend: {
       colors: {
-        surface: scale('surface'),
-        accent: scale('accent'),
-        fg: 'rgb(var(--wds-fg) / <alpha-value>)',
+        site: Object.fromEntries(roles.map(r => [r, `rgb(var(--site-${r}) / <alpha-value>)`])),
       },
       fontFamily: {
-        display: 'var(--wds-font-display)',
+        display: 'var(--site-font-display)',
       },
     },
   },

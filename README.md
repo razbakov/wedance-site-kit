@@ -72,39 +72,80 @@ All under `runtimeConfig.public`; each can be set by env at runtime.
 
 ## Theme
 
-Every `Site*` component paints with three Tailwind colors and one font, never
-with a site's own palette:
+Every `Site*` component paints with role tokens and nothing else, so each site
+keeps its own look. In Tailwind they are `site-<role>` colors
+(`bg-site-bg/60`, `text-site-muted`, `border-site-border/40` …) plus `font-display`.
 
-| Token | Tailwind | Used for |
+| Token | CSS variable | Used for |
 |---|---|---|
-| `surface` 50–950 | `bg-surface-950`, `text-surface-200`, `border-surface-800/40` … | the page's own color: backgrounds, borders, muted text |
-| `accent` 50–950 | `text-accent-400`, `bg-accent-500` … | eyebrows, highlights, buttons |
-| `fg` | `text-fg` | headings and strong text on the surface |
-| `font-display` | `font-display` | headings |
+| `bg` | `--site-bg` | the page; cards sit on it at 50–60 % |
+| `surface` | `--site-surface` | tinted sections, tiles, form fields |
+| `border` | `--site-border` | card and table lines |
+| `border-strong` | `--site-border-strong` | form fields, photo rings |
+| `border-button` | `--site-border-button` | secondary (outline) buttons |
+| `heading` | `--site-heading` | titles and strong text |
+| `text` | `--site-text` | body copy |
+| `muted` | `--site-muted` | secondary copy |
+| `subtle` | `--site-subtle` | small print, placeholders |
+| `faint` | `--site-faint` | the faintest notes and icons |
+| `accent` | `--site-accent` | eyebrows, buttons, badges |
+| `highlight` | `--site-highlight` | the accent words in titles, hovers |
+| `on-accent` | `--site-on-accent` | text on accent buttons |
+| `font-display` | `--site-font-display` | headings |
 
 The default is a dark page with a warm accent. A site sets its look one of two ways:
 
-- **Tailwind colors** (what montuno.club does) — the site's `tailwind.config` wins over the layer's:
-
-  ```ts
-  colors: { surface: wine, accent: gold, fg: '#ffffff' },
-  fontFamily: { display: ['Playfair Display', 'serif'] },
-  ```
-
-- **CSS variables** — RGB channels, so opacity modifiers keep working. The
-  layer's defaults sit in `:where(:root)`, so any `:root` in the site wins:
+- **CSS variables** — space-separated RGB channels, so opacity modifiers keep
+  working. The layer's defaults sit in `:where(:root)`, so any `:root` in the
+  site wins:
 
   ```css
   :root {
-    --wds-surface-950: 255 255 255;   /* a light page… */
-    --wds-surface-200: 64 64 64;
-    --wds-accent-500: 200 30 60;
-    --wds-fg: 20 20 20;               /* …with dark text */
-    --wds-font-display: 'Cormorant', serif;
+    --site-bg: 14 17 28;          /* night */
+    --site-surface: 26 30 46;
+    --site-heading: 244 236 220;  /* sand */
+    --site-text: 226 215 194;
+    --site-accent: 201 162 39;    /* gold */
+    --site-highlight: 222 186 80;
+    --site-on-accent: 14 17 28;
+    --site-font-display: 'Cormorant Garamond', serif;
   }
   ```
 
-  All variables are listed in `app/assets/css/wedance-site.css`.
+- **Tailwind colors** (what montuno.club does, mapping its wine/gold palette) —
+  the site's `tailwind.config` wins over the layer's:
+
+  ```ts
+  colors: {
+    site: { 'bg': wine[950], 'surface': wine[900], /* … */ 'accent': gold[500], 'on-accent': wine[950] },
+  },
+  fontFamily: { display: ['Playfair Display', 'serif'] },
+  ```
+
+## Languages
+
+Each site declares its own locales in its `nuxt.config` — the layer declares
+none, because Nuxt concatenates layers' locale lists:
+
+```ts
+i18n: {
+  locales: [
+    { code: 'en', language: 'en', name: 'English', file: 'en.json' },
+    { code: 'de', language: 'de', name: 'Deutsch', file: 'de.json' },
+    // … montuno.club: en de es ru uk · milailacapote.com: en de it es ru fr pt
+  ],
+  langDir: 'locales',
+},
+```
+
+The layer's defaults, which a site overrides key by key:
+
+- `strategy: 'prefix_except_default'`, `defaultLocale: 'en'`
+- browser-language detection on the homepage only (`redirectOn: 'root'`), remembered in the cookie `i18n_locale` — set `detectBrowserLanguage.cookieKey` to keep an existing one (e.g. `'NEXT_LOCALE'`)
+- `/en` and `/en/…` redirect (301) to the unprefixed page — whatever `defaultLocale` is
+
+The page fetches WeDance in the active language (`?lang=<locale>`); WeDance
+falls back to the site's first language for missing texts.
 
 ## Override a component
 
@@ -118,7 +159,7 @@ import type { SiteSection, WeDanceEvent } from '#wedance-site'
 
 | Section kind | Component |
 |---|---|
-| `hero` | `SiteHero` |
+| `hero` | `SiteHero` — a video file in `video` plays as a muted, looping background with `image` as its poster |
 | `text` | `SiteText` |
 | `cards` | `SiteCards` |
 | `events` | `SiteEvents` (props: `events`, `profileUrl`) |
@@ -144,13 +185,18 @@ overrides `SiteSignup` to put its WhatsApp group there. If the site provides
 - `useWeDanceEvents({ days })` → `{ events, profileUrl, status }`, for pages without the sections (a kiosk).
 - `useWeDanceProfile()` → `{ base, username, profileUrl, apiUrl }` from runtime config.
 - `withUtm(url, medium)`, `eventParts(event, locale)`, `isFree(price)`, `paragraphs(body)`, `linkAttrs(url)`, `youtubeEmbed(url)`, `isWhatsApp(url)`.
+- `useSiteText()` → `st(key)`, the components' own words (see Copy).
 
 ## Copy
 
-The components' own words (table headers, form placeholders, "Sign up") are in
-`i18n/locales/` under `wedanceSite.*`, in en, de, es, ru and uk. A site's own
-locale files win key by key — montuno.club says "Class" and "Join Free" where
-the layer says "Event" and "Sign up".
+The components' own words (table headers, form placeholders, "Sign up") are
+built in for en, de, es, ru, uk, it, fr and pt (`app/utils/siteCopy.ts`), so a
+site needs no locale entries for them. To change one, put it in the site's
+locale file under the same key — montuno.club says "Class" and "Join Free":
+
+```json
+{ "wedanceSite": { "schedule": { "class": "Class" }, "form": { "submit": "Join Free" } } }
+```
 
 ## Releasing
 

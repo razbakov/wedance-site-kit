@@ -4,7 +4,7 @@ const src = computed(() => youtubeEmbed(props.url))
 </script>
 
 <template>
-  <div v-if="src" class="rounded-2xl overflow-hidden border border-surface-800/40 aspect-video">
+  <div v-if="src" class="rounded-2xl overflow-hidden border border-site-border/40 aspect-video">
     <iframe
       :src="src"
       width="100%"

@@ -18,7 +18,7 @@ function toggleFaq(id: string) {
       <div
         v-for="item in section.items ?? []"
         :key="item.id"
-        class="rounded-xl border border-surface-800/40 bg-surface-950/60 overflow-hidden"
+        class="rounded-xl border border-site-border/40 bg-site-bg/60 overflow-hidden"
       >
         <button
           class="flex w-full items-center justify-between px-6 py-5 text-left"
@@ -27,7 +27,7 @@ function toggleFaq(id: string) {
         >
           <span class="font-medium pr-4">{{ item.title }}</span>
           <svg
-            class="w-5 h-5 shrink-0 text-surface-400 transition-transform duration-200"
+            class="w-5 h-5 shrink-0 text-site-subtle transition-transform duration-200"
             :class="{ 'rotate-180': openFaq === item.id }"
             fill="none"
             stroke="currentColor"
@@ -45,7 +45,7 @@ function toggleFaq(id: string) {
           leave-to-class="grid-rows-[0fr]"
         >
           <div v-if="openFaq === item.id" class="px-6 pb-5">
-            <SiteParagraphs :body="item.body" p-class="text-surface-300 leading-relaxed" />
+            <SiteParagraphs :body="item.body" p-class="text-site-muted leading-relaxed" />
           </div>
         </Transition>
       </div>

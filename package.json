@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": "github:razbakov/wedance-site-kit",
   "main": "./nuxt.config.ts",
-  "files": ["app", "i18n", "nuxt.config.ts", "tailwind.config.ts", "README.md", "LICENSE"],
+  "files": ["app", "server", "nuxt.config.ts", "tailwind.config.ts", "README.md", "LICENSE"],
   "peerDependencies": {
     "@nuxtjs/i18n": ">=9",
     "@nuxtjs/tailwindcss": ">=6.12",
