@@ -159,7 +159,7 @@ import type { SiteSection, WeDanceEvent } from '#wedance-site'
 
 | Section kind | Component |
 |---|---|
-| `hero` | `SiteHero` — a video file in `video` plays as a muted, looping background with `image` as its poster |
+| `hero` | `SiteHero` — a video in `video` plays as a muted, looping background with `image` as its poster: an MP4 file, or an HLS stream (`.m3u8`, e.g. `https://stream.mux.com/<playback-id>.m3u8`; hls.js loads only then) |
 | `text` | `SiteText` |
 | `cards` | `SiteCards` |
 | `events` | `SiteEvents` (props: `events`, `profileUrl`) |
