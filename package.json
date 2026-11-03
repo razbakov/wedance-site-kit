@@ -1,0 +1,15 @@
+{
+  "name": "wedance-site-kit",
+  "version": "0.1.0",
+  "description": "Nuxt layer: a site whose content, events and sign-ups live on a WeDance profile.",
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:razbakov/wedance-site-kit",
+  "main": "./nuxt.config.ts",
+  "files": ["app", "i18n", "nuxt.config.ts", "tailwind.config.ts", "README.md", "LICENSE"],
+  "peerDependencies": {
+    "@nuxtjs/i18n": ">=9",
+    "@nuxtjs/tailwindcss": ">=6.12",
+    "nuxt": ">=3.12"
+  }
+}

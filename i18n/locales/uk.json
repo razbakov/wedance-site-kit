@@ -1,0 +1,26 @@
+{
+  "wedanceSite": {
+    "schedule": {
+      "day": "День",
+      "time": "Час",
+      "class": "Подія",
+      "instructor": "Викладач",
+      "free": "БЕЗКОШТОВНО",
+      "signUp": "Записатися",
+      "empty": "На найближчі тижні дати ще не опубліковані.",
+      "followOnWeDance": "Стежте за нами у WeDance",
+      "registerNote": "Запис на всі події — через WeDance."
+    },
+    "form": {
+      "namePlaceholder": "Твоє повне ім'я",
+      "emailPlaceholder": "Твій email",
+      "phonePlaceholder": "Телефон (+49...)",
+      "promoCodePlaceholder": "Промокод (необов'язково)",
+      "submit": "Записатися",
+      "submitting": "Надсилаємо...",
+      "success": "Ти з нами! Перевір пошту.",
+      "error": "Щось пішло не так. Спробуй ще раз.",
+      "privacy": "Ми поважаємо твою конфіденційність. Відписатися можна будь-коли."
+    }
+  }
+}

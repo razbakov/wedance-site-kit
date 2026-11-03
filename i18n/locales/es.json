@@ -1,0 +1,26 @@
+{
+  "wedanceSite": {
+    "schedule": {
+      "day": "Día",
+      "time": "Hora",
+      "class": "Evento",
+      "instructor": "Profesor",
+      "free": "GRATIS",
+      "signUp": "Inscribirme",
+      "empty": "Aún no hay fechas publicadas para las próximas semanas.",
+      "followOnWeDance": "Síguenos en WeDance",
+      "registerNote": "La inscripción a todos los eventos es en WeDance."
+    },
+    "form": {
+      "namePlaceholder": "Tu nombre completo",
+      "emailPlaceholder": "Tu correo electrónico",
+      "phonePlaceholder": "Teléfono (+49...)",
+      "promoCodePlaceholder": "Código promocional (opcional)",
+      "submit": "Inscribirme",
+      "submitting": "Enviando...",
+      "success": "¡Estás dentro! Revisa tu bandeja de entrada.",
+      "error": "Algo salió mal. Inténtalo de nuevo.",
+      "privacy": "Respetamos tu privacidad. Cancela en cualquier momento."
+    }
+  }
+}
