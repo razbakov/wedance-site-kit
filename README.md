@@ -13,7 +13,7 @@ The contract is `shared/types/profileSite.ts` in
 [wedance-2026](https://github.com/razbakov/wedance-2026). `app/utils/wedanceSite.ts`
 mirrors its resolved (one-language) shape; change the contract there first.
 
-Used by [montuno.club](https://github.com/razbakov/montuno-club).
+Used by [montuno.club](https://github.com/razbakov/montuno-club) (Nuxt 4) and dancegodscompany.com (Nuxt 3).
 
 ## Adopt it
 
@@ -23,7 +23,7 @@ and `@nuxtjs/i18n`. The layer adds to their config; it doesn't install them.
 1. Add the layer, pinned to a tag:
 
    ```bash
-   bun add github:razbakov/wedance-site-kit#v0.1.0
+   bun add github:razbakov/wedance-site-kit#v0.1.1
    ```
 
 2. Extend it and name the profile in `nuxt.config.ts`:

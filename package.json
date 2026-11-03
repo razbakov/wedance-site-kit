@@ -1,6 +1,6 @@
 {
   "name": "wedance-site-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt layer: a site whose content, events and sign-ups live on a WeDance profile.",
   "type": "module",
   "license": "MIT",

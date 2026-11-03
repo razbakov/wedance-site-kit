@@ -6,6 +6,11 @@ const here = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 // and theme tokens. The site brings @nuxtjs/tailwindcss and @nuxtjs/i18n
 // (see README); this layer only adds to their config.
 export default defineNuxtConfig({
+  // Spelled out so a Nuxt 3 site finds them too: Nuxt 4 reads a layer's app/,
+  // Nuxt 3 looks for components/ and composables/ at the layer's root. Not
+  // `srcDir: 'app'` — that would leak into the site and move its `~`.
+  components: [{ path: here('./app/components') }],
+  imports: { dirs: [here('./app/composables'), here('./app/utils')] },
   alias: {
     // Types and helpers, for components a site overrides.
     '#wedance-site': here('./app/utils/wedanceSite'),
