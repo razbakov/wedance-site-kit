@@ -4,12 +4,34 @@ const props = defineProps<{ section: SiteSection; tinted?: boolean }>()
 // A video file plays as a silent, looping background, the image as its poster.
 // A YouTube link can't be a background, so the image shows instead.
 const backgroundVideo = computed(() => (props.section.video && !youtubeEmbed(props.section.video) ? props.section.video : ''))
+// An HLS stream (.m3u8, e.g. a Mux link) plays through hls.js, loaded only
+// when a site's hero actually has one.
+const isHls = computed(() => /\.m3u8(\?|$)/i.test(backgroundVideo.value))
 // Server-rendered HTML can lose `muted`, and browsers only autoplay muted video.
 const videoEl = ref<HTMLVideoElement | null>(null)
-onMounted(() => {
-  if (!videoEl.value) return
-  videoEl.value.muted = true
-  videoEl.value.play().catch(() => {})
+let hls: { destroy: () => void } | null = null
+onBeforeUnmount(() => hls?.destroy())
+onMounted(async () => {
+  const el = videoEl.value
+  if (!el) return
+  el.muted = true
+  if (isHls.value) {
+    // hls.js first wherever it runs: some Chromium builds answer "maybe" to
+    // canPlayType for HLS and then never play it. Native HLS only where hls.js
+    // can't run (older iPhones).
+    const { default: Hls } = await import('hls.js')
+    if (Hls.isSupported()) {
+      const player = new Hls({ capLevelToPlayerSize: true })
+      player.loadSource(backgroundVideo.value)
+      player.attachMedia(el)
+      hls = player
+    } else if (el.canPlayType('application/vnd.apple.mpegurl')) {
+      el.src = backgroundVideo.value
+    } else {
+      return
+    }
+  }
+  el.play().catch(() => {})
 })
 </script>
 
@@ -18,7 +40,7 @@ onMounted(() => {
     <video
       v-if="backgroundVideo"
       ref="videoEl"
-      :src="backgroundVideo"
+      :src="isHls ? undefined : backgroundVideo"
       :poster="section.image || undefined"
       class="absolute inset-0 w-full h-full object-cover"
       autoplay
