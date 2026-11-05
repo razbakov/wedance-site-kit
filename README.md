@@ -23,7 +23,7 @@ and `@nuxtjs/i18n`. The layer adds to their config; it doesn't install them.
 1. Add the layer, pinned to a tag:
 
    ```bash
-   bun add github:razbakov/wedance-site-kit#v0.1.1
+   bun add github:razbakov/wedance-site-kit#v0.2.0
    ```
 
 2. Extend it and name the profile in `nuxt.config.ts`:
@@ -60,6 +60,42 @@ and `@nuxtjs/i18n`. The layer adds to their config; it doesn't install them.
 
    `#fallback` shows when WeDance can't be reached or has no section this site can draw.
 
+### Header, footer and theme (v0.2.0)
+
+Optional parts a site can use around `<SiteSections>`:
+
+```vue
+<script setup lang="ts">
+useSiteTheme() // the look kept on WeDance (site.theme), if any
+</script>
+
+<template>
+  <SiteHeader />   <!-- name or logo, the menu (sections with an anchor + menu label), language switch -->
+  <main><SiteSections /></main>
+  <SiteFooter legal />  <!-- name, city, social links, Imprint/Privacy links, "Made with WeDance" -->
+</template>
+```
+
+- `<SiteHeader>` is fixed at the top; jumps to `#anchors` land below it.
+- `<SiteFooter>` props: `legal` (link `/impressum` and `/privacy`), `links` (`{ label, to }[]`),
+  `credit` (default `true`).
+- `<SiteLanguageSwitch>` alone: the site's languages that this app also routes.
+- `useSiteTheme()` writes `site.theme` into `<head>` (role variables, heading font, favicon). A site
+  WeDance has no theme for gets nothing, so its own `:root` / Tailwind colours stay.
+
+### One app, many sites
+
+An app that serves several profiles picks one per request instead of setting `wedanceProfile`:
+
+```ts
+// app/middleware/site.global.ts
+export default defineNuxtRouteMiddleware((to) => {
+  setWeDanceProfile(String(to.params.handle ?? ''))
+})
+```
+
+`useWeDanceProfile()` uses that profile, else `runtimeConfig.public.wedanceProfile`.
+
 ### Runtime config
 
 All under `runtimeConfig.public`; each can be set by env at runtime.
@@ -69,6 +105,18 @@ All under `runtimeConfig.public`; each can be set by env at runtime.
 | `wedanceProfile` | `NUXT_PUBLIC_WEDANCE_PROFILE` | — (required) | The profile's WeDance username, e.g. `montunoclub` |
 | `wedanceUrl` | `NUXT_PUBLIC_WEDANCE_URL` | `https://2026.wedance.vip` | Where WeDance runs (point at a preview or localhost to test) |
 | `wedanceUtmSource` | `NUXT_PUBLIC_WEDANCE_UTM_SOURCE` | `''` | `utm_source` on links to WeDance, and the `form` tag on sign-ups — usually the site's domain |
+
+## Develop
+
+```bash
+bun install
+NUXT_PUBLIC_WEDANCE_PROFILE=<username> bun run dev   # .playground on http://localhost:3000
+bun run typecheck
+```
+
+The playground renders a real profile's site from the public API (production by default; set
+`NUXT_PUBLIC_WEDANCE_URL` to test against a WeDance preview or localhost). `?profile=<username>`
+switches profile per request, the way a multi-site app does.
 
 ## Theme
 

@@ -8,7 +8,7 @@ export function useSiteText() {
   const { t, te, locale } = useI18n()
   return (key: string) => {
     if (te(`wedanceSite.${key}`)) return t(`wedanceSite.${key}`)
-    const [group, name] = key.split('.') as ['schedule' | 'form', string]
+    const [group, name] = key.split('.') as ['schedule' | 'form' | 'site', string]
     return siteCopy[locale.value]?.[group]?.[name] ?? siteCopy.en![group][name] ?? key
   }
 }
