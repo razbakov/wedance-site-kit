@@ -23,7 +23,7 @@ and `@nuxtjs/i18n`. The layer adds to their config; it doesn't install them.
 1. Add the layer, pinned to a tag:
 
    ```bash
-   bun add github:razbakov/wedance-site-kit#v0.2.1
+   bun add github:razbakov/wedance-site-kit#v0.2.2
    ```
 
 2. Extend it and name the profile in `nuxt.config.ts`:
@@ -97,7 +97,8 @@ export default defineNuxtRouteMiddleware((to) => {
 `useWeDanceProfile()` uses that profile, else `runtimeConfig.public.wedanceProfile`. When the
 site lives under a path (`sites.wedance.vip/<handle>`), pass it so the header's home link and the
 footer's legal links stay inside: `setWeDanceProfile(handle, { basePath: `/${handle}` })`;
-`useSitePath()('/impressum')` builds such links in the current language.
+`useSitePath()('/impressum')` builds such links in the current language. A preview link's token
+(`?preview=…`, for drafts) goes in the same call: `setWeDanceProfile(handle, { basePath, preview })`.
 
 ### Runtime config
 

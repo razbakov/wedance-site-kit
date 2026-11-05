@@ -82,6 +82,10 @@ export type WeDanceSite = {
   contactsUrl: string
   // Newer WeDance answers (hosted sites); older ones leave them out.
   theme?: SiteTheme
+  /** false = a draft, shown only through a preview link. */
+  published?: boolean
+  /** This answer came through a preview link: don't let search engines index it. */
+  preview?: boolean
 }
 
 const TZ = 'Europe/Berlin'
