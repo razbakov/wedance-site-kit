@@ -11,6 +11,7 @@ import type { WeDanceSite } from '../utils/wedanceSite'
 /** The profile picked for this request, when one app serves many sites (wedance-sites). */
 const useProfileOverride = () => useState<string | null>('wedance-profile', () => null)
 const useBasePath = () => useState<string>('wedance-site-base', () => '')
+const usePreviewToken = () => useState<string>('wedance-site-preview', () => '')
 
 /**
  * Serve this request as `username`'s site. Call it before anything reads the
@@ -21,9 +22,11 @@ const useBasePath = () => useState<string>('wedance-site-base', () => '')
  * e.g. '/salsa-school' on sites.wedance.vip/salsa-school. The header's home
  * link and the footer's legal links stay under it.
  */
-export function setWeDanceProfile(username: string | null, opts: { basePath?: string } = {}) {
+export function setWeDanceProfile(username: string | null, opts: { basePath?: string; preview?: string } = {}) {
   useProfileOverride().value = username
   useBasePath().value = (opts.basePath ?? '').replace(/\/$/, '')
+  // A preview link from the site's team: WeDance shows the site even while it's a draft.
+  usePreviewToken().value = opts.preview ?? ''
 }
 
 /** A path inside this site, in the current language: sitePath('/impressum') → '/de/salsa-school/impressum'. */
@@ -44,11 +47,12 @@ export function useWeDanceProfile() {
 export function useWeDanceSite() {
   const { username, profileUrl: fallbackProfileUrl, apiUrl } = useWeDanceProfile()
   const { locale } = useI18n()
+  const preview = usePreviewToken()
   // One cache entry per language: the header and the page share it, and a
   // language switch fetches that language's copy.
   const { data, error, status } = useFetch<WeDanceSite>(`${apiUrl}/site`, {
-    key: computed(() => `wedance-site-${username}-${locale.value}`),
-    query: { lang: locale },
+    key: computed(() => `wedance-site-${username}-${locale.value}${preview.value ? '-preview' : ''}`),
+    query: computed(() => (preview.value ? { lang: locale.value, preview: preview.value } : { lang: locale.value })),
   })
 
   const site = computed(() => (data.value && Array.isArray(data.value.sections) ? data.value : null))
