@@ -44,7 +44,31 @@ export type WeDanceEvent = {
   url: string
 }
 
-export type WeDanceProfileRef = { username: string; name: string; url: string }
+export type WeDanceSocial = { platform: string; url: string }
+
+export type WeDanceProfileRef = {
+  username: string
+  name: string
+  url: string
+  // Newer WeDance answers (v0.2.0+); older ones leave them out.
+  photo?: string | null
+  city?: string | null
+  socials?: WeDanceSocial[]
+}
+
+/** The 13 role tokens (tailwind.config.ts), each as space-separated RGB channels: "245 158 11". */
+export type SiteThemeRole = 'bg' | 'surface' | 'border' | 'border-strong' | 'border-button' | 'heading' | 'text' | 'muted' | 'subtle' | 'faint' | 'accent' | 'highlight' | 'on-accent'
+
+/** The look WeDance resolved for this site (its preset + overrides). Every field is optional. */
+export type SiteTheme = {
+  vars?: Partial<Record<SiteThemeRole, string>>
+  /** CSS font-family for headings, e.g. "'Playfair Display', serif". */
+  fontDisplay?: string
+  /** A stylesheet that loads that font (Google Fonts). */
+  fontUrl?: string
+  logo?: string
+  favicon?: string
+}
 
 export type WeDanceSite = {
   profile: WeDanceProfileRef
@@ -56,6 +80,8 @@ export type WeDanceSite = {
   updatedAt: string | null
   events: WeDanceEvent[]
   contactsUrl: string
+  // Newer WeDance answers (hosted sites); older ones leave them out.
+  theme?: SiteTheme
 }
 
 const TZ = 'Europe/Berlin'

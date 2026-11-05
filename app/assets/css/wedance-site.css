@@ -20,3 +20,8 @@
   --site-on-accent: 9 9 11;
   --site-font-display: Georgia, 'Times New Roman', serif;
 }
+
+/* SiteHeader is fixed: jumps to #anchors land below it, not under it. */
+.site-has-header [id] {
+  scroll-margin-top: 4.5rem;
+}

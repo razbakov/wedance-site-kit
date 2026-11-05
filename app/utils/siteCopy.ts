@@ -1,10 +1,11 @@
 /**
- * The words the Site* components say themselves (table headers, the form),
+ * The words the Site* components say themselves (table headers, the form, the
+ * header and footer),
  * so a site gets them in any of these languages without adding locale files.
  * A site's own messages under the same keys (wedanceSite.schedule.day …) win —
  * see useSiteText. Unknown languages fall back to English.
  */
-export const siteCopy: Record<string, { schedule: Record<string, string>; form: Record<string, string> }> = {
+export const siteCopy: Record<string, { schedule: Record<string, string>; form: Record<string, string>; site: Record<string, string> }> = {
   "en": {
     "schedule": {
       "day": "Day",
@@ -27,6 +28,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "You're in! Check your inbox.",
       "error": "Something went wrong. Please try again.",
       "privacy": "We respect your privacy. Unsubscribe anytime."
+    },
+    "site": {
+      "menu": "Menu",
+      "close": "Close",
+      "language": "Language",
+      "madeWith": "Made with WeDance",
+      "impressum": "Imprint",
+      "privacy": "Privacy",
+      "followUs": "Follow us",
+      "home": "Home"
     }
   },
   "de": {
@@ -51,6 +62,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "Du bist dabei! Schau in dein Postfach.",
       "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       "privacy": "Wir respektieren deine Privatsphäre. Jederzeit abmeldbar."
+    },
+    "site": {
+      "menu": "Menü",
+      "close": "Schließen",
+      "language": "Sprache",
+      "madeWith": "Erstellt mit WeDance",
+      "impressum": "Impressum",
+      "privacy": "Datenschutz",
+      "followUs": "Folge uns",
+      "home": "Start"
     }
   },
   "es": {
@@ -75,6 +96,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "¡Estás dentro! Revisa tu bandeja de entrada.",
       "error": "Algo salió mal. Inténtalo de nuevo.",
       "privacy": "Respetamos tu privacidad. Cancela en cualquier momento."
+    },
+    "site": {
+      "menu": "Menú",
+      "close": "Cerrar",
+      "language": "Idioma",
+      "madeWith": "Hecho con WeDance",
+      "impressum": "Aviso legal",
+      "privacy": "Privacidad",
+      "followUs": "Síguenos",
+      "home": "Inicio"
     }
   },
   "ru": {
@@ -99,6 +130,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "Ты в деле! Проверь почту.",
       "error": "Что-то пошло не так. Попробуй ещё раз.",
       "privacy": "Мы уважаем твою конфиденциальность. Отписаться можно в любой момент."
+    },
+    "site": {
+      "menu": "Меню",
+      "close": "Закрыть",
+      "language": "Язык",
+      "madeWith": "Сделано на WeDance",
+      "impressum": "Выходные данные",
+      "privacy": "Конфиденциальность",
+      "followUs": "Мы в соцсетях",
+      "home": "Главная"
     }
   },
   "uk": {
@@ -123,6 +164,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "Ти з нами! Перевір пошту.",
       "error": "Щось пішло не так. Спробуй ще раз.",
       "privacy": "Ми поважаємо твою конфіденційність. Відписатися можна будь-коли."
+    },
+    "site": {
+      "menu": "Меню",
+      "close": "Закрити",
+      "language": "Мова",
+      "madeWith": "Зроблено на WeDance",
+      "impressum": "Вихідні дані",
+      "privacy": "Конфіденційність",
+      "followUs": "Ми в соцмережах",
+      "home": "Головна"
     }
   },
   "it": {
@@ -147,6 +198,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "Ci sei! Controlla la tua casella di posta.",
       "error": "Qualcosa è andato storto. Riprova.",
       "privacy": "Rispettiamo la tua privacy. Puoi annullare l'iscrizione in qualsiasi momento."
+    },
+    "site": {
+      "menu": "Menu",
+      "close": "Chiudi",
+      "language": "Lingua",
+      "madeWith": "Fatto con WeDance",
+      "impressum": "Note legali",
+      "privacy": "Privacy",
+      "followUs": "Seguici",
+      "home": "Home"
     }
   },
   "fr": {
@@ -171,6 +232,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "C'est fait ! Vérifiez votre boîte mail.",
       "error": "Une erreur s'est produite. Veuillez réessayer.",
       "privacy": "Nous respectons votre vie privée. Désinscription à tout moment."
+    },
+    "site": {
+      "menu": "Menu",
+      "close": "Fermer",
+      "language": "Langue",
+      "madeWith": "Créé avec WeDance",
+      "impressum": "Mentions légales",
+      "privacy": "Confidentialité",
+      "followUs": "Suivez-nous",
+      "home": "Accueil"
     }
   },
   "pt": {
@@ -195,6 +266,16 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "success": "Está dentro! Verifique a sua caixa de entrada.",
       "error": "Algo correu mal. Tente novamente.",
       "privacy": "Respeitamos a sua privacidade. Cancele a qualquer momento."
+    },
+    "site": {
+      "menu": "Menu",
+      "close": "Fechar",
+      "language": "Idioma",
+      "madeWith": "Feito com WeDance",
+      "impressum": "Aviso legal",
+      "privacy": "Privacidade",
+      "followUs": "Siga-nos",
+      "home": "Início"
     }
   }
 }
