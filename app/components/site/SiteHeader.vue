@@ -4,7 +4,7 @@
 // phone the menu folds behind a button.
 const { site, sections } = useWeDanceSite()
 const text = useSiteText()
-const localePath = useLocalePath()
+const sitePath = useSitePath()
 const { locale } = useI18n()
 
 const nav = computed(() => sections.value
@@ -23,7 +23,7 @@ useHead({ htmlAttrs: { class: 'site-has-header', lang: () => locale.value } })
 <template>
   <header v-if="site" class="fixed inset-x-0 top-0 z-40 border-b border-site-border/40 bg-site-bg/80 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-      <NuxtLink :to="localePath('/')" class="flex min-w-0 items-center gap-2 font-display text-lg text-site-heading" @click="open = false">
+      <NuxtLink :to="sitePath('/')" class="flex min-w-0 items-center gap-2 font-display text-lg text-site-heading" @click="open = false">
         <img v-if="logo" :src="logo" :alt="name" class="h-9 w-auto max-w-[10rem] object-contain">
         <span v-else class="truncate">{{ name }}</span>
       </NuxtLink>

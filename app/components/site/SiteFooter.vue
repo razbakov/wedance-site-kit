@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
 const { site, profileUrl } = useWeDanceSite()
 const { base } = useWeDanceProfile()
 const text = useSiteText()
-const localePath = useLocalePath()
+const sitePath = useSitePath()
 
 const NAMES: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', tiktok: 'TikTok', whatsapp: 'WhatsApp', telegram: 'Telegram', website: 'Website', spotify: 'Spotify', soundcloud: 'SoundCloud' }
 const socials = computed(() => (site.value?.profile?.socials ?? [])
@@ -20,7 +20,7 @@ const socials = computed(() => (site.value?.profile?.socials ?? [])
   .map(s => ({ label: NAMES[s.platform.toLowerCase()] ?? s.platform, url: s.url })))
 const allLinks = computed(() => [
   ...props.links,
-  ...(props.legal ? [{ label: text('site.impressum'), to: localePath('/impressum') }, { label: text('site.privacy'), to: localePath('/privacy') }] : []),
+  ...(props.legal ? [{ label: text('site.impressum'), to: sitePath('/impressum') }, { label: text('site.privacy'), to: sitePath('/privacy') }] : []),
 ])
 const year = new Date().getFullYear()
 </script>

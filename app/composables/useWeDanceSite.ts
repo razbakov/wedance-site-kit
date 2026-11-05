@@ -10,14 +10,27 @@ import type { WeDanceSite } from '../utils/wedanceSite'
 
 /** The profile picked for this request, when one app serves many sites (wedance-sites). */
 const useProfileOverride = () => useState<string | null>('wedance-profile', () => null)
+const useBasePath = () => useState<string>('wedance-site-base', () => '')
 
 /**
  * Serve this request as `username`'s site. Call it before anything reads the
  * site — in a route middleware or plugin. A site built for one profile never
  * needs it: runtimeConfig.public.wedanceProfile is enough.
+ *
+ * `basePath`: where the site lives in this app when it isn't the whole domain,
+ * e.g. '/salsa-school' on sites.wedance.vip/salsa-school. The header's home
+ * link and the footer's legal links stay under it.
  */
-export function setWeDanceProfile(username: string | null) {
+export function setWeDanceProfile(username: string | null, opts: { basePath?: string } = {}) {
   useProfileOverride().value = username
+  useBasePath().value = (opts.basePath ?? '').replace(/\/$/, '')
+}
+
+/** A path inside this site, in the current language: sitePath('/impressum') → '/de/salsa-school/impressum'. */
+export function useSitePath() {
+  const base = useBasePath()
+  const localePath = useLocalePath()
+  return (path = '/') => localePath(`${base.value}${path === '/' && base.value ? '' : path}` || '/')
 }
 
 export function useWeDanceProfile() {
