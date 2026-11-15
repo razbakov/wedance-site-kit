@@ -23,7 +23,7 @@ and `@nuxtjs/i18n`. The layer adds to their config; it doesn't install them.
 1. Add the layer, pinned to a tag:
 
    ```bash
-   bun add github:razbakov/wedance-site-kit#v0.2.2
+   bun add github:razbakov/wedance-site-kit#v0.2.3
    ```
 
 2. Extend it and name the profile in `nuxt.config.ts`:
@@ -116,6 +116,7 @@ All under `runtimeConfig.public`; each can be set by env at runtime.
 bun install
 NUXT_PUBLIC_WEDANCE_PROFILE=<username> bun run dev   # .playground on http://localhost:3000
 bun run typecheck
+bun run test
 ```
 
 The playground renders a real profile's site from the public API (production by default; set
@@ -214,7 +215,7 @@ import type { SiteSection, WeDanceEvent } from '#wedance-site'
 | `hero` | `SiteHero` — a video in `video` plays as a muted, looping background with `image` as its poster: an MP4 file, or an HLS stream (`.m3u8`, e.g. `https://stream.mux.com/<playback-id>.m3u8`; hls.js loads only then) |
 | `text` | `SiteText` |
 | `cards` | `SiteCards` |
-| `events` | `SiteEvents` (props: `events`, `profileUrl`) |
+| `events` | `SiteEvents` (props: `events`, `profileUrl`) — a cancelled date (`cancelled`, v0.2.3) stays listed, crossed out with its `cancelReason` and a "Details" link instead of "Sign up" |
 | `faq` | `SiteFaq` |
 | `video` | `SiteVideo` |
 | `person` | `SitePerson` |
@@ -236,7 +237,7 @@ overrides `SiteSignup` to put its WhatsApp group there. If the site provides
 - `useWeDanceSite()` → `{ site, sections, events, profileUrl, contactsUrl, error, status }`. One fetch per language, shared by every caller (a header building its menu from `sections` costs nothing extra).
 - `useWeDanceEvents({ days })` → `{ events, profileUrl, status }`, for pages without the sections (a kiosk).
 - `useWeDanceProfile()` → `{ base, username, profileUrl, apiUrl }` from runtime config.
-- `withUtm(url, medium)`, `eventParts(event, locale)`, `isFree(price)`, `paragraphs(body)`, `linkAttrs(url)`, `youtubeEmbed(url)`, `isWhatsApp(url)`.
+- `withUtm(url, medium)`, `eventParts(event, locale)`, `isFree(price)`, `isCancelled(event)`, `cancelReason(event)`, `schemaEventStatus(event)` (schema.org `EventCancelled` / `EventScheduled`, for structured data), `paragraphs(body)`, `linkAttrs(url)`, `youtubeEmbed(url)`, `isWhatsApp(url)`.
 - `useSiteText()` → `st(key)`, the components' own words (see Copy).
 
 ## Copy

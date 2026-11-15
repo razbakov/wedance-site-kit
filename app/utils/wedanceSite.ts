@@ -42,6 +42,11 @@ export type WeDanceEvent = {
   styles: string[]
   artists: { handle: string; name: string }[]
   url: string
+  // Newer WeDance answers (RAZ-948); older ones leave them out = scheduled.
+  /** Cancelled by its organiser: still listed, shown crossed out. */
+  cancelled?: boolean
+  /** The organiser's short reason, when they gave one (only when cancelled). */
+  cancelReason?: string | null
 }
 
 export type WeDanceSocial = { platform: string; url: string }
@@ -113,6 +118,17 @@ export function youtubeEmbed(url?: string) {
 }
 
 export const isWhatsApp = (url?: string) => !!url && /(^|\.)(whatsapp\.com|wa\.me)/.test(url.replace(/^https?:\/\//, ''))
+
+/** Cancelled by its organiser (RAZ-948). A feed without the field means scheduled. */
+export const isCancelled = (e: Pick<WeDanceEvent, 'cancelled'>) => e.cancelled === true
+
+/** The organiser's reason, trimmed; empty when there is none or the event isn't cancelled. */
+export const cancelReason = (e: Pick<WeDanceEvent, 'cancelled' | 'cancelReason'>) =>
+  isCancelled(e) ? (e.cancelReason ?? '').trim() : ''
+
+/** schema.org eventStatus, so search engines mark the date as cancelled too. */
+export const schemaEventStatus = (e: Pick<WeDanceEvent, 'cancelled'>) =>
+  isCancelled(e) ? 'https://schema.org/EventCancelled' : 'https://schema.org/EventScheduled'
 
 export const isFree = (price: string) => /^(free|0|0 ?€|€ ?0|kostenlos|gratis)$/i.test(price.trim())
 

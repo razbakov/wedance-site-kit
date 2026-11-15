@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import type { SiteSection, WeDanceEvent } from '#wedance-site'
-// The profile's upcoming events on WeDance; each row signs up there.
+// The profile's upcoming events on WeDance; each row signs up there. A
+// cancelled date (RAZ-948) stays in the list, crossed out with the organiser's
+// reason and no sign-up button, so nobody turns up to something that isn't on.
 const props = defineProps<{ section: SiteSection; events: WeDanceEvent[]; profileUrl: string; tinted?: boolean }>()
 const { locale } = useI18n()
 const st = useSiteText()
 
-const schedule = computed(() => props.events.map(e => ({ ...e, ...eventParts(e, locale.value), free: isFree(e.price), signup: withUtm(e.url, 'schedule') })))
+const schedule = computed(() => props.events.map((e) => {
+  const cancelled = isCancelled(e)
+  return {
+    ...e,
+    ...eventParts(e, locale.value),
+    free: isFree(e.price),
+    cancelled,
+    reason: cancelReason(e),
+    signup: withUtm(e.url, cancelled ? 'schedule-cancelled' : 'schedule'),
+  }
+}))
 
 function openUrl(url: string) {
   window.open(url, '_blank', 'noopener')
@@ -32,20 +44,30 @@ function openUrl(url: string) {
           </tr>
         </thead>
         <tbody class="divide-y divide-site-border/30">
-          <tr v-for="e in schedule" :key="e.id" class="group cursor-pointer hover:bg-site-border/20 transition-colors" @click="openUrl(e.signup)">
-            <td class="py-5 pr-6 text-site-text font-medium">
+          <tr
+            v-for="e in schedule"
+            :key="e.id"
+            :data-cancelled="e.cancelled || undefined"
+            class="group cursor-pointer hover:bg-site-border/20 transition-colors"
+            :class="{ 'opacity-70': e.cancelled }"
+            @click="openUrl(e.signup)"
+          >
+            <td class="py-5 pr-6 text-site-text font-medium" :class="{ 'line-through decoration-site-subtle': e.cancelled }">
               {{ e.weekday }}
               <span class="block text-xs font-normal text-site-subtle">{{ e.date }}</span>
             </td>
-            <td class="py-5 pr-6 text-site-muted">{{ e.time }}</td>
+            <td class="py-5 pr-6 text-site-muted" :class="{ 'line-through': e.cancelled }">{{ e.time }}</td>
             <td class="py-5 pr-6">
-              <a :href="e.signup" target="_blank" rel="noopener" class="font-medium text-site-heading group-hover:text-site-highlight transition-colors" @click.stop>{{ e.name }}</a>
-              <span v-if="e.free" class="ml-2 inline-block rounded-full bg-site-accent/20 px-2.5 py-0.5 text-xs font-semibold text-site-highlight">{{ st('schedule.free') }}</span>
+              <a :href="e.signup" target="_blank" rel="noopener" class="font-medium text-site-heading group-hover:text-site-highlight transition-colors" :class="{ 'line-through': e.cancelled }" @click.stop>{{ e.name }}</a>
+              <span v-if="e.cancelled" class="ml-2 inline-block rounded-full border border-site-heading/40 px-2.5 py-0.5 text-xs font-semibold uppercase text-site-heading">{{ st('schedule.cancelled') }}</span>
+              <span v-else-if="e.free" class="ml-2 inline-block rounded-full bg-site-accent/20 px-2.5 py-0.5 text-xs font-semibold text-site-highlight">{{ st('schedule.free') }}</span>
+              <span v-if="e.reason" class="block text-sm text-site-text">{{ e.reason }}</span>
               <span v-if="e.venueName" class="block text-xs text-site-subtle">{{ e.venueName }}</span>
             </td>
             <td class="py-5 pr-6 text-site-muted">{{ e.artists.map(a => a.name).join(', ') }}</td>
             <td class="py-5 text-right">
-              <span class="inline-block rounded-full border border-site-accent/40 px-3 py-1 text-xs font-semibold text-site-highlight group-hover:bg-site-accent/10 whitespace-nowrap">{{ st('schedule.signUp') }}</span>
+              <span v-if="e.cancelled" class="inline-block px-3 py-1 text-xs font-semibold text-site-subtle whitespace-nowrap">{{ st('schedule.details') }}</span>
+              <span v-else class="inline-block rounded-full border border-site-accent/40 px-3 py-1 text-xs font-semibold text-site-highlight group-hover:bg-site-accent/10 whitespace-nowrap">{{ st('schedule.signUp') }}</span>
             </td>
           </tr>
           <tr v-if="!schedule.length">
