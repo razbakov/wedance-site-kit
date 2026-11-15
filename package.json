@@ -1,6 +1,6 @@
 {
   "name": "wedance-site-kit",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Nuxt layer: a site whose content, events and sign-ups live on a WeDance profile.",
   "type": "module",
   "license": "MIT",
@@ -25,7 +25,8 @@
   "scripts": {
     "dev": "nuxi dev .playground",
     "build:playground": "nuxi build .playground",
-    "typecheck": "nuxi typecheck .playground"
+    "typecheck": "nuxi typecheck .playground",
+    "test": "bun test"
   },
   "devDependencies": {
     "@nuxtjs/i18n": "^10.2.4",

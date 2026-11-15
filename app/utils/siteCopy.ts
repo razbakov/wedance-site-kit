@@ -16,7 +16,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Sign up",
       "empty": "No dates published for the next weeks yet.",
       "followOnWeDance": "Follow us on WeDance",
-      "registerNote": "Sign-up for every event runs on WeDance."
+      "registerNote": "Sign-up for every event runs on WeDance.",
+      "cancelled": "Cancelled",
+      "details": "Details"
     },
     "form": {
       "namePlaceholder": "Your full name",
@@ -50,7 +52,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Anmelden",
       "empty": "Für die nächsten Wochen sind noch keine Termine veröffentlicht.",
       "followOnWeDance": "Folge uns auf WeDance",
-      "registerNote": "Die Anmeldung zu allen Terminen läuft über WeDance."
+      "registerNote": "Die Anmeldung zu allen Terminen läuft über WeDance.",
+      "cancelled": "Fällt aus",
+      "details": "Details"
     },
     "form": {
       "namePlaceholder": "Dein vollständiger Name",
@@ -84,7 +88,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Inscribirme",
       "empty": "Aún no hay fechas publicadas para las próximas semanas.",
       "followOnWeDance": "Síguenos en WeDance",
-      "registerNote": "La inscripción a todos los eventos es en WeDance."
+      "registerNote": "La inscripción a todos los eventos es en WeDance.",
+      "cancelled": "Cancelado",
+      "details": "Detalles"
     },
     "form": {
       "namePlaceholder": "Tu nombre completo",
@@ -118,7 +124,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Записаться",
       "empty": "На ближайшие недели даты пока не опубликованы.",
       "followOnWeDance": "Подпишитесь на нас в WeDance",
-      "registerNote": "Запись на все события — через WeDance."
+      "registerNote": "Запись на все события — через WeDance.",
+      "cancelled": "Отменено",
+      "details": "Подробнее"
     },
     "form": {
       "namePlaceholder": "Твоё полное имя",
@@ -152,7 +160,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Записатися",
       "empty": "На найближчі тижні дати ще не опубліковані.",
       "followOnWeDance": "Стежте за нами у WeDance",
-      "registerNote": "Запис на всі події — через WeDance."
+      "registerNote": "Запис на всі події — через WeDance.",
+      "cancelled": "Скасовано",
+      "details": "Докладніше"
     },
     "form": {
       "namePlaceholder": "Твоє повне ім'я",
@@ -186,7 +196,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Iscriviti",
       "empty": "Nessuna data pubblicata per le prossime settimane.",
       "followOnWeDance": "Seguici su WeDance",
-      "registerNote": "Le iscrizioni a tutti gli eventi sono su WeDance."
+      "registerNote": "Le iscrizioni a tutti gli eventi sono su WeDance.",
+      "cancelled": "Annullato",
+      "details": "Dettagli"
     },
     "form": {
       "namePlaceholder": "Il tuo nome e cognome",
@@ -220,7 +232,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "S'inscrire",
       "empty": "Aucune date publiée pour les prochaines semaines.",
       "followOnWeDance": "Suivez-nous sur WeDance",
-      "registerNote": "Les inscriptions à tous les événements se font sur WeDance."
+      "registerNote": "Les inscriptions à tous les événements se font sur WeDance.",
+      "cancelled": "Annulé",
+      "details": "Détails"
     },
     "form": {
       "namePlaceholder": "Votre nom complet",
@@ -254,7 +268,9 @@ export const siteCopy: Record<string, { schedule: Record<string, string>; form: 
       "signUp": "Inscrever-me",
       "empty": "Ainda não há datas publicadas para as próximas semanas.",
       "followOnWeDance": "Siga-nos no WeDance",
-      "registerNote": "As inscrições em todos os eventos são feitas no WeDance."
+      "registerNote": "As inscrições em todos os eventos são feitas no WeDance.",
+      "cancelled": "Cancelado",
+      "details": "Detalhes"
     },
     "form": {
       "namePlaceholder": "O seu nome completo",
