@@ -110,6 +110,16 @@ All under `runtimeConfig.public`; each can be set by env at runtime.
 | `wedanceUrl` | `NUXT_PUBLIC_WEDANCE_URL` | `https://2026.wedance.vip` | Where WeDance runs (point at a preview or localhost to test) |
 | `wedanceUtmSource` | `NUXT_PUBLIC_WEDANCE_UTM_SOURCE` | `''` | `utm_source` on links to WeDance, and the `form` tag on sign-ups — usually the site's domain |
 
+### Where visitors came from
+
+Links to WeDance carry `utm_source=<wedanceUtmSource>` and `utm_medium=<section>` (`schedule`, `footer`, …).
+On top of that, `app/plugins/landing-source.client.ts` remembers how the visitor reached the site — the
+landing's own `utm_source[-utm_medium]` (`instagram-bio`), else the referring host (`l.instagram.com`), else
+`direct` — and sets it as `utm_campaign` on a WeDance link when it is clicked (a link that already names a
+campaign keeps it). WeDance keeps those tags on the sign-up's contact, so the page's Contacts shows the whole
+route: `montuno.club / schedule / instagram-bio`. Tag the links you share (bio, WhatsApp groups, flyer QR
+codes) with `utm_source` / `utm_medium` to see them there.
+
 ## Develop
 
 ```bash
