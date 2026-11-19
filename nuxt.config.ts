@@ -11,6 +11,8 @@ export default defineNuxtConfig({
   // `srcDir: 'app'` — that would leak into the site and move its `~`.
   components: [{ path: here('./app/components') }],
   imports: { dirs: [here('./app/composables'), here('./app/utils')] },
+  // Passes the visitor's landing source on to WeDance links (RAZ-1074).
+  plugins: [here('./app/plugins/landing-source.client.ts')],
   alias: {
     // Types and helpers, for components a site overrides.
     '#wedance-site': here('./app/utils/wedanceSite'),
