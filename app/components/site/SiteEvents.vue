@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { SiteSection, WeDanceEvent } from '#wedance-site'
+import type { SiteSection, WeDanceEvent, WeDanceProfileRef } from '#wedance-site'
 // The profile's upcoming events on WeDance; each row signs up there. A
 // cancelled date (RAZ-948) stays in the list, crossed out with the organiser's
 // reason and no sign-up button, so nobody turns up to something that isn't on.
-const props = defineProps<{ section: SiteSection; events: WeDanceEvent[]; profileUrl: string; tinted?: boolean }>()
+// The people column says Teacher, Artist or With as WeDance tells it, and is
+// left out when it would only name the site's own profile (RAZ-1094).
+const props = defineProps<{ section: SiteSection; events: WeDanceEvent[]; profileUrl: string; profile?: WeDanceProfileRef | null; tinted?: boolean }>()
 const { locale } = useI18n()
 const st = useSiteText()
 
@@ -18,6 +20,8 @@ const schedule = computed(() => props.events.map((e) => {
     signup: withUtm(e.url, cancelled ? 'schedule-cancelled' : 'schedule'),
   }
 }))
+
+const people = computed(() => peopleColumn(props.profile, props.events))
 
 function openUrl(url: string) {
   window.open(url, '_blank', 'noopener')
@@ -39,7 +43,7 @@ function openUrl(url: string) {
             <th class="pb-4 pr-6 text-sm font-semibold uppercase tracking-wider text-site-accent">{{ st('schedule.day') }}</th>
             <th class="pb-4 pr-6 text-sm font-semibold uppercase tracking-wider text-site-accent">{{ st('schedule.time') }}</th>
             <th class="pb-4 pr-6 text-sm font-semibold uppercase tracking-wider text-site-accent">{{ st('schedule.class') }}</th>
-            <th class="pb-4 pr-6 text-sm font-semibold uppercase tracking-wider text-site-accent">{{ st('schedule.instructor') }}</th>
+            <th v-if="people" class="pb-4 pr-6 text-sm font-semibold uppercase tracking-wider text-site-accent">{{ st(people) }}</th>
             <th class="pb-4"><span class="sr-only">{{ st('schedule.signUp') }}</span></th>
           </tr>
         </thead>
@@ -64,14 +68,14 @@ function openUrl(url: string) {
               <span v-if="e.reason" class="block text-sm text-site-text">{{ e.reason }}</span>
               <span v-if="e.venueName" class="block text-xs text-site-subtle">{{ e.venueName }}</span>
             </td>
-            <td class="py-5 pr-6 text-site-muted">{{ e.artists.map(a => a.name).join(', ') }}</td>
+            <td v-if="people" class="py-5 pr-6 text-site-muted">{{ e.artists.map(a => a.name).join(', ') }}</td>
             <td class="py-5 text-right">
               <span v-if="e.cancelled" class="inline-block px-3 py-1 text-xs font-semibold text-site-subtle whitespace-nowrap">{{ st('schedule.details') }}</span>
               <span v-else class="inline-block rounded-full border border-site-accent/40 px-3 py-1 text-xs font-semibold text-site-highlight group-hover:bg-site-accent/10 whitespace-nowrap">{{ st('schedule.signUp') }}</span>
             </td>
           </tr>
           <tr v-if="!schedule.length">
-            <td colspan="5" class="py-8 text-center text-site-muted">
+            <td :colspan="people ? 5 : 4" class="py-8 text-center text-site-muted">
               {{ st('schedule.empty') }}
               <a :href="withUtm(profileUrl, 'schedule-empty')" target="_blank" rel="noopener" class="ml-1 text-site-highlight underline underline-offset-4">{{ st('schedule.followOnWeDance') }}</a>
             </td>
