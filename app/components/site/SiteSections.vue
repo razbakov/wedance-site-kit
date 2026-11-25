@@ -2,7 +2,7 @@
 // The page body: every section the profile's site has on WeDance, each kind
 // drawn by its Site* component. Components resolve by name, so a site that
 // has its own app/components/site/SiteHero.vue (say) gets that one instead.
-const { sections, events, profileUrl, contactsUrl } = useWeDanceSite()
+const { site, sections, events, profileUrl, contactsUrl } = useWeDanceSite()
 
 const kinds: Record<string, ReturnType<typeof resolveComponent>> = {
   hero: resolveComponent('SiteHero'),
@@ -31,7 +31,7 @@ const blocks = computed(() => sections.value
       :section="b.section"
       :tinted="b.tinted"
       v-bind="b.section.kind === 'events'
-        ? { events, profileUrl }
+        ? { events, profileUrl, profile: site?.profile }
         : b.section.kind === 'signup' ? { contactsUrl } : {}"
     />
   </template>

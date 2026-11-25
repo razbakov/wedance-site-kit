@@ -59,7 +59,16 @@ export type WeDanceProfileRef = {
   photo?: string | null
   city?: string | null
   socials?: WeDanceSocial[]
+  // Newer WeDance answers (RAZ-1094); older ones leave them out.
+  /** venue | artist | organizer | promoter. */
+  type?: string | null
+  roles?: string[]
+  /** The word for the schedule's people column. Missing = 'teacher' (older feeds were schools). */
+  schedulePeople?: SchedulePeople
 }
+
+/** teacher: a school · artist: an artist, band or orchestra · with: anything else. */
+export type SchedulePeople = 'teacher' | 'artist' | 'with'
 
 /** The 13 role tokens (tailwind.config.ts), each as space-separated RGB channels: "245 158 11". */
 export type SiteThemeRole = 'bg' | 'surface' | 'border' | 'border-strong' | 'border-button' | 'heading' | 'text' | 'muted' | 'subtle' | 'faint' | 'accent' | 'highlight' | 'on-accent'
@@ -129,6 +138,22 @@ export const cancelReason = (e: Pick<WeDanceEvent, 'cancelled' | 'cancelReason'>
 /** schema.org eventStatus, so search engines mark the date as cancelled too. */
 export const schemaEventStatus = (e: Pick<WeDanceEvent, 'cancelled'>) =>
   isCancelled(e) ? 'https://schema.org/EventCancelled' : 'https://schema.org/EventScheduled'
+
+/**
+ * The schedule's people-column header key, or null to hide the column: when no
+ * row names anyone but the site's own profile (an orchestra listing its own
+ * concerts), the column would only repeat the site's name (RAZ-1094).
+ */
+export function peopleColumn(
+  profile: Pick<WeDanceProfileRef, 'username' | 'schedulePeople'> | null | undefined,
+  events: Pick<WeDanceEvent, 'artists'>[],
+): 'schedule.instructor' | 'schedule.artist' | 'schedule.with' | null {
+  const owner = profile?.username?.toLowerCase()
+  const someoneElse = events.some(e => e.artists.some(a => a.handle?.toLowerCase() !== owner))
+  if (!someoneElse) return null
+  const word = profile?.schedulePeople
+  return word === 'artist' ? 'schedule.artist' : word === 'with' ? 'schedule.with' : 'schedule.instructor'
+}
 
 export const isFree = (price: string) => /^(free|0|0 ?€|€ ?0|kostenlos|gratis)$/i.test(price.trim())
 
